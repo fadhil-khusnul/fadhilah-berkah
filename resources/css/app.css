@@ -1,0 +1,54 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --emerald-500: #10b981;
+    --emerald-600: #059669;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    transition: background-color 0.3s ease;
+}
+
+/* Ant Design Root Overrides (Use sparingly) */
+.ant-layout {
+    min-height: 100vh;
+}
+
+/* Custom Shadows and Glassmorphism */
+.glass-header {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dark-mode .glass-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.shadow-premium {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Transitions */
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Hide/Show Helpers */
+@media (max-width: 1024px) {
+    .lg-hidden { display: none !important; }
+}
+
+@media (min-width: 1024px) {
+    .lg-show { display: block !important; }
+}
