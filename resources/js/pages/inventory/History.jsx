@@ -58,6 +58,7 @@ const InventoryHistory = ({ product, history }) => {
                 columns={columns} 
                 dataSource={history} 
                 rowKey="id"
+                scroll={{ x: true }}
             />
         </MainLayout>
     );

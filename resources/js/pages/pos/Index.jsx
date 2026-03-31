@@ -69,7 +69,7 @@ const PosIndex = ({ products }) => {
 
     return (
         <MainLayout>
-            <Row gutter={ 24 }>
+            <Row gutter={ [24, 24] }>
                 {/* Product List */ }
                 <Col xs={ 24 } lg={ 15 }>
                     <Card bordered={ false } className="shadow-sm">

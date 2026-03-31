@@ -142,6 +142,7 @@ const MainLayout = ({ children }) => {
                 collapsedWidth={ 64 }
                 width={ 260 }
                 theme={ isDarkMode ? 'dark' : 'light' }
+                className="hidden lg:block"
             >
                 { SiderBrand }
                 <Menu
@@ -152,23 +153,27 @@ const MainLayout = ({ children }) => {
                 />
             </Sider>
 
-            {/* Mobile Drawer */ }
             <Drawer
                 placement="left"
                 onClose={ () => setMobileOpen(false) }
                 open={ mobileOpen }
-                styles={ { body: { padding: 0 } } }
-                closeIcon={ null }
-                width={ 260 }
-                theme={ isDarkMode ? 'dark' : 'light' }
+                styles={ {
+                    body: { padding: 0, backgroundColor: isDarkMode ? '#1e293b' : '#fff' },
+                    header: { display: 'none' }
+                } }
+                width={ 280 }
             >
-                { SiderBrand }
-                <Menu
-                    mode="inline"
-                    defaultSelectedKeys={ [window.location.pathname.split('/')[1] || 'dashboard'] }
-                    items={ menuItems }
-                    style={ { borderRight: 0, marginTop: 16 } }
-                />
+                <div style={ { height: '100%', backgroundColor: 'inherit' } }>
+                    { SiderBrand }
+                    <Menu
+                        mode="inline"
+                        theme={ isDarkMode ? 'dark' : 'light' }
+                        defaultSelectedKeys={ [window.location.pathname.split('/')[1] || 'dashboard'] }
+                        items={ menuItems }
+                        onClick={ () => setMobileOpen(false) }
+                        style={ { borderRight: 0, marginTop: 16, backgroundColor: 'transparent' } }
+                    />
+                </div>
             </Drawer>
 
             <Layout style={ {
@@ -182,6 +187,8 @@ const MainLayout = ({ children }) => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
+                    padding: windowWidth < 640 ? '0 12px' : '0 24px',
+                    backgroundColor: isDarkMode ? '#1e293b' : '#fff',
                     boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.03)',
                     borderBottom: '1px solid rgba(0, 0, 0, 0.05)'
                 } }>
@@ -189,7 +196,7 @@ const MainLayout = ({ children }) => {
                         type="text"
                         icon={ collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined /> }
                         onClick={ () => {
-                            if (window.innerWidth < 1024) {
+                            if (windowWidth < 1024) {
                                 setMobileOpen(true);
                             } else {
                                 setCollapsed(!collapsed);
@@ -198,23 +205,25 @@ const MainLayout = ({ children }) => {
                         style={ { fontSize: 18, width: 40, height: 40 } }
                     />
 
-                    <Space size={ 24 }>
-                        <div style={ { display: 'flex', alignItems: 'center', gap: 8 } }>
+                    <Space size={ windowWidth < 640 ? 12 : 24 }>
+                        <div style={ { display: 'flex', alignItems: 'center', gap: 8 } } className="hidden xs:flex">
                             <BulbOutlined style={ { fontSize: 14, color: isDarkMode ? 'inherit' : '#10b981' } } />
                             <Switch size="small" checked={ isDarkMode } onChange={ toggleTheme } />
                             <BulbFilled style={ { fontSize: 14, color: isDarkMode ? '#10b981' : 'inherit' } } />
                         </div>
 
                         <Dropdown menu={ userMenu } placement="bottomRight" arrow>
-                            <Space style={ { cursor: 'pointer' } } size={ 12 }>
-                                <div style={ { textAlign: 'right', display: 'flex', flexDirection: 'column' } } className="hidden sm:flex">
-                                    <Text strong style={ { fontSize: 13, lineHeight: 1 } }>{ auth.user.name }</Text>
-                                    <Text type="secondary" style={ { fontSize: 10, textTransform: 'uppercase', fontWeight: 700, letterSpacing: 0.5 } }>
+                            <Space style={ { cursor: 'pointer' } } size={ 8 }>
+                                <div style={ { textAlign: 'right', display: 'flex', flexDirection: 'column', maxWidth: 100 } } className="hidden sm:flex">
+                                    <Text strong style={ { fontSize: 13, lineHeight: 1.2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' } }>
+                                        { auth.user.name }
+                                    </Text>
+                                    <Text type="secondary" style={ { fontSize: 10, textTransform: 'uppercase', fontWeight: 700, letterSpacing: 0.5, whiteSpace: 'nowrap' } }>
                                         { isAdmin ? 'Administrator' : 'Kasir' }
                                     </Text>
                                 </div>
                                 <Avatar
-                                    style={ { backgroundColor: '#10b981', verticalAlign: 'middle' } }
+                                    style={ { backgroundColor: '#10b981', verticalAlign: 'middle', flexShrink: 0 } }
                                     icon={ <UserOutlined /> }
                                 />
                             </Space>

@@ -5,6 +5,18 @@ import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
+    // server: {
+    //     host: '0.0.0.0',
+    //     hmr: {
+    //         host, // Ini memberitahu browser untuk connect ke IP Anda
+    //     },
+    // },
+    // server: {
+    //     host: '0.0.0.0',
+    //     hmr: {
+    //         host: '192.168.18.51',
+    //     },
+    // },
     plugins: [
         tailwindcss(),
         laravel({

@@ -106,6 +106,7 @@ const UserIndex = ({ users, roles }) => {
                 columns={columns} 
                 dataSource={users} 
                 rowKey="id"
+                scroll={{ x: true }}
             />
 
             <Modal

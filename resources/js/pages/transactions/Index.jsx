@@ -71,6 +71,7 @@ const TransactionIndex = ({ transactions }) => {
                 columns={columns} 
                 dataSource={transactions.data} 
                 rowKey="id"
+                scroll={{ x: true }}
                 pagination={{
                     current: transactions.current_page,
                     pageSize: transactions.per_page,

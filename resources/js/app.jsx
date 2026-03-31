@@ -3,8 +3,21 @@ import { ConfigProvider, App as AntdApp, theme as antdTheme } from 'antd';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { StrictMode, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import { registerSW } from 'virtual:pwa-register';
 import '../css/app.css';
 import { themeConfig, darkThemeConfig } from './themeConfig';
+
+// Register PWA Service Worker
+if (typeof window !== 'undefined') {
+    registerSW({
+        onNeedRefresh() {
+            console.log('PWA: Content updated, please refresh');
+        },
+        onOfflineReady() {
+            console.log('PWA: Ready to work offline');
+        },
+    });
+}
 
 const appName = import.meta.env.VITE_APP_NAME || 'Fadhilah Berkah';
 

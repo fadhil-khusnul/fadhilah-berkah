@@ -136,6 +136,7 @@ const InventoryIndex = ({ products, filters }) => {
                 columns={columns} 
                 dataSource={products.data} 
                 rowKey="id"
+                scroll={{ x: 'max-content' }}
                 pagination={{
                     current: products.current_page,
                     pageSize: products.per_page,
