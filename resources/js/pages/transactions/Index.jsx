@@ -1,5 +1,5 @@
 import React from 'react';
-import MainLayout from '../../layouts/MainLayout';
+import AppLayout from '../../layouts/AppLayout';
 import { Table, Button, Typography, Space, Tag, Input } from 'antd';
 import { PrinterOutlined, EyeOutlined, SearchOutlined } from '@ant-design/icons';
 import { router } from '@inertiajs/react';
@@ -55,7 +55,7 @@ const TransactionIndex = ({ transactions }) => {
     ];
 
     return (
-        <MainLayout>
+        <AppLayout>
             <div className="mb-6 flex justify-between items-center sm:flex-row flex-col gap-4">
                 <Title level={4}>Riwayat Transaksi</Title>
                 <Input
@@ -79,7 +79,7 @@ const TransactionIndex = ({ transactions }) => {
                     onChange: (page) => router.get(route('transactions.index'), { page }),
                 }}
             />
-        </MainLayout>
+        </AppLayout>
     );
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import MainLayout from '../layouts/MainLayout';
+import AppLayout from '../layouts/AppLayout';
 import { Row, Col, Card, Statistic, Typography } from 'antd';
 import {
     ShoppingCartOutlined,
@@ -58,7 +58,7 @@ const Dashboard = ({ stats, chartData }) => {
     };
 
     return (
-        <MainLayout>
+        <AppLayout>
             <div className="mb-8">
                 <AntTitle level={2} style={{ fontWeight: 800, letterSpacing: -1 }}>Dashboard Ringkasan</AntTitle>
                 <Text type="secondary" className="text-sm">Pantau performa toko Fadhilah Berkah hari ini.</Text>
@@ -118,7 +118,7 @@ const Dashboard = ({ stats, chartData }) => {
                     </div>
                 </Card>
             </div>
-        </MainLayout>
+        </AppLayout>
     );
 };
 

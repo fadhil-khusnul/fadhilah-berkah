@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import MainLayout from '../../layouts/MainLayout';
+import AppLayout from '../../layouts/AppLayout';
 import { Row, Col, Card, List, Input, InputNumber, Button, Typography, Space, Divider, Radio, Modal, message, Badge } from 'antd';
 import { ShoppingCartOutlined, SearchOutlined, DeleteOutlined, CreditCardOutlined, MoneyCollectOutlined } from '@ant-design/icons';
 import { router } from '@inertiajs/react';
@@ -68,7 +68,7 @@ const PosIndex = ({ products }) => {
     };
 
     return (
-        <MainLayout>
+        <AppLayout>
             <Row gutter={ [24, 24] }>
                 {/* Product List */ }
                 <Col xs={ 24 } lg={ 15 }>
@@ -247,7 +247,7 @@ const PosIndex = ({ products }) => {
                     </div>
                 </div>
             </Modal>
-        </MainLayout>
+        </AppLayout>
     );
 };
 

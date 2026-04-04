@@ -181,53 +181,83 @@ const MainLayout = ({ children }) => {
                 minHeight: '100vh'
             } }>
                 <Header style={ {
-                    position: 'sticky',
+                    position: window.location.pathname === '/' ? 'absolute' : 'sticky',
                     top: 0,
-                    zIndex: 40,
+                    width: '100%',
+                    zIndex: 100,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     padding: windowWidth < 640 ? '0 12px' : '0 24px',
-                    backgroundColor: isDarkMode ? '#1e293b' : '#fff',
-                    boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.03)',
-                    borderBottom: '1px solid rgba(0, 0, 0, 0.05)'
+                    backgroundColor: window.location.pathname === '/' 
+                        ? 'transparent' 
+                        : (isDarkMode ? '#1e293b' : '#fff'),
+                    boxShadow: window.location.pathname === '/' ? 'none' : '0 1px 2px 0 rgba(0, 0, 0, 0.03)',
+                    borderBottom: window.location.pathname === '/' ? 'none' : '1px solid rgba(0, 0, 0, 0.05)',
+                    transition: 'all 0.3s'
                 } }>
-                    <Button
-                        type="text"
-                        icon={ collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined /> }
-                        onClick={ () => {
-                            if (windowWidth < 1024) {
-                                setMobileOpen(true);
-                            } else {
-                                setCollapsed(!collapsed);
-                            }
-                        } }
-                        style={ { fontSize: 18, width: 40, height: 40 } }
-                    />
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                        {window.location.pathname !== '/' && (
+                            <Button
+                                type="text"
+                                icon={ collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined /> }
+                                onClick={ () => {
+                                    if (windowWidth < 1024) {
+                                        setMobileOpen(true);
+                                    } else {
+                                        setCollapsed(!collapsed);
+                                    }
+                                } }
+                                style={ { fontSize: 18, width: 40, height: 40, color: isDarkMode ? '#fff' : 'inherit' } }
+                            />
+                        )}
+                        {window.location.pathname === '/' && (
+                            <Title level={4} style={{ margin: 0, color: '#fff', fontWeight: 800 }}>
+                                FADHILAH<span style={{ color: '#10b981' }}>.</span>
+                            </Title>
+                        )}
+                    </div>
 
                     <Space size={ windowWidth < 640 ? 12 : 24 }>
                         <div style={ { display: 'flex', alignItems: 'center', gap: 8 } } className="hidden xs:flex">
-                            <BulbOutlined style={ { fontSize: 14, color: isDarkMode ? 'inherit' : '#10b981' } } />
+                            <BulbOutlined style={ { fontSize: 14, color: window.location.pathname === '/' ? '#fff' : (isDarkMode ? 'inherit' : '#10b981') } } />
                             <Switch size="small" checked={ isDarkMode } onChange={ toggleTheme } />
-                            <BulbFilled style={ { fontSize: 14, color: isDarkMode ? '#10b981' : 'inherit' } } />
+                            <BulbFilled style={ { fontSize: 14, color: window.location.pathname === '/' ? '#fff' : (isDarkMode ? '#10b981' : 'inherit') } } />
                         </div>
 
-                        <Dropdown menu={ userMenu } placement="bottomRight" arrow>
-                            <Space style={ { cursor: 'pointer' } } size={ 8 }>
-                                <div style={ { textAlign: 'right', display: 'flex', flexDirection: 'column', maxWidth: 100 } } className="hidden sm:flex">
-                                    <Text strong style={ { fontSize: 13, lineHeight: 1.2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' } }>
-                                        { auth.user.name }
-                                    </Text>
-                                    <Text type="secondary" style={ { fontSize: 10, textTransform: 'uppercase', fontWeight: 700, letterSpacing: 0.5, whiteSpace: 'nowrap' } }>
-                                        { isAdmin ? 'Administrator' : 'Kasir' }
-                                    </Text>
-                                </div>
-                                <Avatar
-                                    style={ { backgroundColor: '#10b981', verticalAlign: 'middle', flexShrink: 0 } }
-                                    icon={ <UserOutlined /> }
-                                />
-                            </Space>
-                        </Dropdown>
+                        {auth.user ? (
+                            <Dropdown menu={ userMenu } placement="bottomRight" arrow>
+                                <Space style={ { cursor: 'pointer' } } size={ 8 }>
+                                    <div style={ { textAlign: 'right', display: 'flex', flexDirection: 'column', maxWidth: 100 } } className="hidden sm:flex">
+                                        <Text strong style={ { fontSize: 13, lineHeight: 1.2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', color: window.location.pathname === '/' ? '#fff' : 'inherit' } }>
+                                            { auth.user.name }
+                                        </Text>
+                                        <Text type="secondary" style={ { fontSize: 10, textTransform: 'uppercase', fontWeight: 700, letterSpacing: 0.5, whiteSpace: 'nowrap', color: window.location.pathname === '/' ? 'rgba(255,255,255,0.7)' : 'inherit' } }>
+                                            { isAdmin ? 'Administrator' : 'Kasir' }
+                                        </Text>
+                                    </div>
+                                    <Avatar
+                                        style={ { backgroundColor: '#10b981', verticalAlign: 'middle', flexShrink: 0 } }
+                                        icon={ <UserOutlined /> }
+                                    />
+                                </Space>
+                            </Dropdown>
+                        ) : (
+                            <Link href={route('login')}>
+                                <Button 
+                                    type="primary" 
+                                    shape="round" 
+                                    ghost={window.location.pathname === '/'}
+                                    style={{ 
+                                        borderColor: '#10b981', 
+                                        color: window.location.pathname === '/' ? '#fff' : '#10b981',
+                                        background: window.location.pathname === '/' ? 'transparent' : 'white'
+                                    }}
+                                >
+                                    Login Admin
+                                </Button>
+                            </Link>
+                        )}
                     </Space>
                 </Header>
 

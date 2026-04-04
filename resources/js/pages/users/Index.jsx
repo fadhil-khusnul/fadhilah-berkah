@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import MainLayout from '../../layouts/MainLayout';
+import AppLayout from '../../layouts/AppLayout';
 import { Table, Button, Input, Modal, Form, Space, Typography, Tag, Popconfirm, Select, message } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined, UserOutlined, LockOutlined } from '@ant-design/icons';
 import { router, usePage } from '@inertiajs/react';
@@ -90,7 +90,7 @@ const UserIndex = ({ users, roles }) => {
     };
 
     return (
-        <MainLayout>
+        <AppLayout>
             <div className="mb-6 flex justify-between items-center sm:flex-row flex-col gap-4">
                 <Title level={4}>Manajemen User</Title>
                 <Button type="primary" icon={<PlusOutlined />} onClick={() => {
@@ -138,7 +138,7 @@ const UserIndex = ({ users, roles }) => {
                     </Form.Item>
                 </Form>
             </Modal>
-        </MainLayout>
+        </AppLayout>
     );
 };
 

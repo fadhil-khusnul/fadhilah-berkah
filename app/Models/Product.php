@@ -11,6 +11,21 @@ class Product extends Model
 
     protected $guarded = [];
 
+    protected $appends = ['image_url'];
+
+    public function getImageUrlAttribute()
+    {
+        if (! $this->image) {
+            return 'https://placehold.co/600x400?text=No+Image';
+        }
+
+        if (filter_var($this->image, FILTER_VALIDATE_URL)) {
+            return $this->image;
+        }
+
+        return asset('storage/'.$this->image);
+    }
+
     public function stockHistories()
     {
         return $this->hasMany(StockHistory::class);

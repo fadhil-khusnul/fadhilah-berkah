@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\PosController;
 use App\Http\Controllers\TransactionController;
@@ -8,9 +9,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return redirect()->route('login');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -28,6 +27,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware(['role:Admin'])->group(function () {
         // Inventory
         Route::resource('inventory', InventoryController::class);
+        Route::put('inventory-product/{product}', [InventoryController::class, 'update'])->name('inventory.update_product');
+
         Route::post('inventory/{product}/adjust', [InventoryController::class, 'adjust'])->name('inventory.adjust');
         Route::get('inventory/{product}/history', [InventoryController::class, 'history'])->name('inventory.history');
 

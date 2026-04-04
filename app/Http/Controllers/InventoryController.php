@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\StockHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class InventoryController extends Controller
@@ -29,9 +30,19 @@ class InventoryController extends Controller
             'selling_price' => 'required|numeric|min:0',
             'unit' => 'required|string|max:50',
             'stock' => 'required|integer|min:0',
+            'image' => 'nullable', // Flexible: file or URL string
+            'description' => 'nullable|string',
+            'is_featured' => 'nullable|boolean',
         ]);
 
-        $product = Product::create($request->all());
+        $data = $request->all();
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('products', 'public');
+            $data['image'] = $path;
+        }
+
+        $product = Product::create($data);
 
         // Log initial stock
         StockHistory::create([
@@ -47,20 +58,42 @@ class InventoryController extends Controller
 
     public function update(Request $request, Product $product)
     {
+        // dd($product, $request->all());
         $request->validate([
             'name' => 'required|string|max:255',
             'selling_price' => 'required|numeric|min:0',
             'unit' => 'required|string|max:50',
+            'image' => 'nullable', // Flexible: file or URL string
+            'description' => 'nullable|string',
+            'is_featured' => 'nullable|boolean',
         ]);
 
-        $product->update($request->only(['name', 'selling_price', 'unit']));
+        // Use except(['image']) to prevent overwriting with null if no new input
+        $data = $request->except(['image']);
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('products', 'public');
+            $data['image'] = $path;
+        } elseif ($request->filled('image')) {
+            // New URL string provided
+            $data['image'] = $request->image;
+        }
+
+        $product->update($data);
 
         return back()->with('success', 'Barang berhasil diperbarui.');
     }
 
-    public function destroy(Product $product)
+    public function destroy($id)
     {
+        $product = Product::find($id);
+
+        if ($product->image && ! str_contains($product->image, 'http')) {
+            Storage::disk('public')->delete($product->image);
+        }
+
         $product->delete();
+
         return back()->with('success', 'Barang berhasil dihapus.');
     }
 

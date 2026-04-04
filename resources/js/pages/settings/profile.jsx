@@ -1,5 +1,5 @@
 import React from 'react';
-import MainLayout from '@/layouts/MainLayout';
+import AppLayout from '@/layouts/AppLayout';
 import { Head, useForm, usePage } from '@inertiajs/react';
 import { Card, Form, Input, Button, Typography, Row, Col, Space, Alert, Divider, App } from 'antd';
 import { UserOutlined, MailOutlined, SaveOutlined, LockOutlined, WarningOutlined } from '@ant-design/icons';
@@ -23,7 +23,7 @@ export default function Profile({ mustVerifyEmail, status }) {
     };
 
     return (
-        <MainLayout>
+        <AppLayout>
             <Head title="Pengaturan Profil" />
             
             <div style={{ padding: '0 0 40px 0' }}>
@@ -124,7 +124,7 @@ export default function Profile({ mustVerifyEmail, status }) {
                     </Card>
                 </Col>
             </Row>
-        </MainLayout>
+        </AppLayout>
     );
 }
 

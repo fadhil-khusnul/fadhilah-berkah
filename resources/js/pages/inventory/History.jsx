@@ -1,5 +1,5 @@
 import React from 'react';
-import MainLayout from '../../layouts/MainLayout';
+import AppLayout from '../../layouts/AppLayout';
 import { Table, Typography, Tag, Button } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { router } from '@inertiajs/react';
@@ -48,7 +48,7 @@ const InventoryHistory = ({ product, history }) => {
     ];
 
     return (
-        <MainLayout>
+        <AppLayout>
             <div className="mb-6 flex items-center gap-4">
                 <Button icon={<ArrowLeftOutlined />} onClick={() => router.get(route('inventory.index'))} />
                 <Title level={4} style={{ margin: 0 }}>Riwayat Stok: {product.name}</Title>
@@ -60,7 +60,7 @@ const InventoryHistory = ({ product, history }) => {
                 rowKey="id"
                 scroll={{ x: true }}
             />
-        </MainLayout>
+        </AppLayout>
     );
 };
 
