@@ -1,0 +1,28 @@
+{
+  "id": "/",
+  "name": "Fadhilah Berkah Inventory & POS",
+  "short_name": "Fadhilah Berkah",
+  "description": "Sistem Manajemen Inventaris & POS Fadhilah Berkah",
+  "start_url": "/?standalone=true",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#00b96b",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "prefer_related_applications": false
+}

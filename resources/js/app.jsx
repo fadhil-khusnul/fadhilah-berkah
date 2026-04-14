@@ -3,19 +3,18 @@ import { ConfigProvider, App as AntdApp, theme as antdTheme } from 'antd';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { StrictMode, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { registerSW } from 'virtual:pwa-register';
 import '../css/app.css';
+import PWAInstallPrompt from './components/PWAInstallPrompt';
 import { themeConfig, darkThemeConfig } from './themeConfig';
 
 // Register PWA Service Worker
-if (typeof window !== 'undefined') {
-    registerSW({
-        onNeedRefresh() {
-            console.log('PWA: Content updated, please refresh');
-        },
-        onOfflineReady() {
-            console.log('PWA: Ready to work offline');
-        },
+if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').then(registration => {
+            console.log('PWA: ServiceWorker registered successfully with scope: ', registration.scope);
+        }).catch(err => {
+            console.error('PWA: ServiceWorker registration failed: ', err);
+        });
     });
 }
 
@@ -37,14 +36,15 @@ const AppWrapper = ({ App, props }) => {
     const currentTheme = isDarkMode ? darkThemeConfig : themeConfig;
 
     return (
-        <ConfigProvider 
-            theme={{
+        <ConfigProvider
+            theme={ {
                 ...currentTheme,
                 algorithm: isDarkMode ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
-            }}
+            } }
         >
             <AntdApp>
-                <App {...props} />
+                <App { ...props } />
+                <PWAInstallPrompt />
             </AntdApp>
         </ConfigProvider>
     );
@@ -57,7 +57,7 @@ createInertiaApp({
         const root = createRoot(el);
         root.render(
             <StrictMode>
-                <AppWrapper App={App} props={props} />
+                <AppWrapper App={ App } props={ props } />
             </StrictMode>
         );
     },
